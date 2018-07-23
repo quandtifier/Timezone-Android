@@ -1,5 +1,7 @@
 package com.a000webhostapp.httpsquandt.timezone;
 
+
+import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -9,7 +11,10 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class TimezoneActivity extends AppCompatActivity {
+import com.a000webhostapp.httpsquandt.timezone.Timezone.TimezoneContent;
+
+public class TimezoneActivity extends AppCompatActivity
+    implements TimezoneListFragment.OnListFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,6 +22,10 @@ public class TimezoneActivity extends AppCompatActivity {
         setContentView(R.layout.activity_timezone);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.timezone_fragment_container, new TimezoneListFragment())
+                .commit();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -48,5 +57,24 @@ public class TimezoneActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onListFragmentInteraction(TimezoneContent.TimezoneItem item) {
+        TimezoneDetailFragment timezoneDetailFragment = null;
+        if(findViewById(R.id.timezone_fragment_container) == null) {
+//            timezoneDetailFragment = (TimezoneDetailFragment) getSupportFragmentManager()
+//                    .findFragmentById(R.id.timezone_detail_frag);
+//            timezoneDetailFragment.updateTimezoneItemView(item);
+        } else {
+            timezoneDetailFragment = TimezoneDetailFragment.getCourseDetailFragment(item);
+
+            FragmentTransaction transaction = getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.timezone_fragment_container, timezoneDetailFragment)
+                    .addToBackStack(null);
+
+            transaction.commit();
+        }
     }
 }

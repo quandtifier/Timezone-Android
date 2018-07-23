@@ -10,10 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.a000webhostapp.httpsquandt.timezone.dummy.DummyContent;
-import com.a000webhostapp.httpsquandt.timezone.dummy.DummyContent.DummyItem;
-
-import java.util.List;
+import com.a000webhostapp.httpsquandt.timezone.Timezone.TimezoneContent;
+import com.a000webhostapp.httpsquandt.timezone.Timezone.TimezoneContent.TimezoneItem;
 
 /**
  * A fragment representing a list of Items.
@@ -69,7 +67,7 @@ public class TimezoneListFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyTimezoneRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            recyclerView.setAdapter(new MyTimezoneRecyclerViewAdapter(TimezoneContent.ITEMS, mListener));
         }
         return view;
     }
@@ -104,6 +102,6 @@ public class TimezoneListFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(TimezoneItem item);
     }
 }

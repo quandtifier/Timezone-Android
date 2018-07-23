@@ -7,21 +7,21 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.a000webhostapp.httpsquandt.timezone.TimezoneListFragment.OnListFragmentInteractionListener;
-import com.a000webhostapp.httpsquandt.timezone.dummy.DummyContent.DummyItem;
+import com.a000webhostapp.httpsquandt.timezone.Timezone.TimezoneContent.TimezoneItem;
 
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
+ * {@link RecyclerView.Adapter} that can display a {@link TimezoneItem} and makes a call to the
  * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
 public class MyTimezoneRecyclerViewAdapter extends RecyclerView.Adapter<MyTimezoneRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private final List<TimezoneItem> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyTimezoneRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+    public MyTimezoneRecyclerViewAdapter(List<TimezoneItem> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -60,7 +60,7 @@ public class MyTimezoneRecyclerViewAdapter extends RecyclerView.Adapter<MyTimezo
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public DummyItem mItem;
+        public TimezoneItem mItem;
 
         public ViewHolder(View view) {
             super(view);
