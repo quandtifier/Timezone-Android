@@ -3,5 +3,8 @@
     <string name="action_settings">Settings</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="enter_city">Enter a City Name</string>
+    <string name="enter_surrounding_locality">Enter the Surrounding Locality</string>
+    <string name="find_location_details">Find Location Details</string>
+
 </resources>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".LocationAddFragment">
+
+
+    <EditText
+        android:id="@+id/text_field_add_city"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="@string/enter_city" />
+
+    <EditText
+        android:id="@+id/text_field_add_surrounding_locality"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="@string/enter_surrounding_locality" />
+
+    <Button
+        android:id="@+id/btn_find_location_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/find_location_details" />
+
+</LinearLayout>

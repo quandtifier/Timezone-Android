@@ -146,7 +146,7 @@ public class LocationListFragment extends Fragment {
                     }
 
                 } catch (Exception e) {
-                    response = "Unable to download the list of courses, Reason: "
+                    response = "Unable to download the list of locations, Reason: "
                             + e.getMessage();
                 }
                 finally {
@@ -157,31 +157,31 @@ public class LocationListFragment extends Fragment {
             return response;
         }
 
-        @Override
-        protected void onPostExecute(String result) {
-            Log.i(TAG, "onPostExecute");
-
-            if (result.startsWith("Unable to")) {
-                Toast.makeText(getActivity().getApplicationContext(), result, Toast.LENGTH_SHORT)
-                        .show();
-                return;
-            }
-
-            try {
-                Log.i("WEBSERVRESULT--------", result);
-                mLocationList = Location.parseLocationJSON(result);
-            }
-            catch (JSONException e) {
-                Toast.makeText(getActivity().getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT)
-                        .show();
-                return;
-            }
-
-            // Everything is good, show the list of courses.
-            if (!mLocationList.isEmpty()) {
-                mRecyclerView.setAdapter(new MyLocationRecyclerViewAdapter(mLocationList, mListener));
-            }
-        }
+//        @Override
+//        protected void onPostExecute(String result) {
+//            Log.i(TAG, "onPostExecute");
+//
+//            if (result.startsWith("Unable to")) {
+//                Toast.makeText(getActivity().getApplicationContext(), result, Toast.LENGTH_SHORT)
+//                        .show();
+//                return;
+//            }
+//
+//            try {
+//                Log.i("WEBSERVRESULT--------", result);
+//                mLocationList = Location.parseLocationJSON(result);
+//            }
+//            catch (JSONException e) {
+//                Toast.makeText(getActivity().getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT)
+//                        .show();
+//                return;
+//            }
+//
+//            // Everything is good, show the list of courses.
+//            if (!mLocationList.isEmpty()) {
+//                mRecyclerView.setAdapter(new MyLocationRecyclerViewAdapter(mLocationList, mListener));
+//            }
+//        }
 
 
     }

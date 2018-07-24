@@ -14,6 +14,8 @@ public class Location implements Serializable{
 
     public static final String RESULTS = "results";
     public static final String ADDRESS_COMPONENTS = "address_components";
+    public static final String FORMATTED_ADDRESS = "formatted_address";
+
     public static final String LONG_NAME = "long_name";
 
     public static final String GEOMETRY = "geometry";
@@ -37,29 +39,51 @@ public class Location implements Serializable{
     }
 
 
-    public static List<Location> parseLocationJSON(String locationJSON) throws JSONException {
-        List<Location> locationList = new ArrayList<Location>();
+
+    public static Location parseLocationJSON(String locationJSON) throws JSONException {
+        Location location = null;
         if (locationJSON != null) {
 
             JSONObject jsonObject = new JSONObject(locationJSON);
             JSONArray results = jsonObject.getJSONArray(RESULTS);
             JSONObject outerObj = results.getJSONObject(0);
 
-            JSONArray addressComponents = outerObj.getJSONArray(ADDRESS_COMPONENTS);
-            JSONObject addressComponentObject = addressComponents.getJSONObject(0);
+
 
             JSONObject geometry = outerObj.getJSONObject(GEOMETRY);
             JSONObject locationObj = geometry.getJSONObject(LOCATION);
 
-            Location location = new Location(addressComponentObject.getString(LONG_NAME), locationObj.getString(LAT), locationObj.getString(LNG));
-            Log.i("PARSING_____", addressComponentObject.getString(LONG_NAME));
+            location = new Location(outerObj.getString(FORMATTED_ADDRESS), locationObj.getString(LAT), locationObj.getString(LNG));
+            Log.i("PARSING_____", outerObj.getString(FORMATTED_ADDRESS));
             Log.i("PARSING_____",  locationObj.getString(LAT));
             Log.i("PARSING_____", locationObj.getString(LNG));
-            locationList.add(location);
         }
 
-        return locationList;
+        return location;
     }
+
+//    public static List<Location> parseLocationJSON(String locationJSON) throws JSONException {
+//        List<Location> locationList = new ArrayList<Location>();
+//        if (locationJSON != null) {
+//
+//            JSONObject jsonObject = new JSONObject(locationJSON);
+//            JSONArray results = jsonObject.getJSONArray(RESULTS);
+//            JSONObject outerObj = results.getJSONObject(0);
+//
+//
+//
+//            JSONObject geometry = outerObj.getJSONObject(GEOMETRY);
+//            JSONObject locationObj = geometry.getJSONObject(LOCATION);
+//
+//            Location location = new Location(outerObj.getString(FORMATTED_ADDRESS), locationObj.getString(LAT), locationObj.getString(LNG));
+//            Log.i("PARSING_____", outerObj.getString(FORMATTED_ADDRESS));
+//            Log.i("PARSING_____",  locationObj.getString(LAT));
+//            Log.i("PARSING_____", locationObj.getString(LNG));
+//            locationList.add(location);
+//        }
+//
+//        return locationList;
+//    }
 
 //    public static List<Location> parseLocationJSON(String locationJSON) throws JSONException {
 //        List<Location> locationList = new ArrayList<Location>();

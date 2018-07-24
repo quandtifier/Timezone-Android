@@ -15,7 +15,8 @@ import location.Location;
 
 public class LocationActivity extends AppCompatActivity
     implements LocationDetailFragment.OnFragmentInteractionListener,
-    LocationListFragment.OnListFragmentInteractionListener {
+    LocationListFragment.OnListFragmentInteractionListener,
+    LocationAddFragment.LocationAddListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +33,11 @@ public class LocationActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                LocationAddFragment locationAddFragment = new LocationAddFragment();
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.timezone_fragment_container, locationAddFragment)
+                        .addToBackStack(null)
+                        .commit();
             }
         });
     }
@@ -68,6 +72,11 @@ public class LocationActivity extends AppCompatActivity
 
     @Override
     public void onListFragmentInteraction(Location item) {
+
+    }
+
+    @Override
+    public void addLocation(Location location) {
 
     }
 }
