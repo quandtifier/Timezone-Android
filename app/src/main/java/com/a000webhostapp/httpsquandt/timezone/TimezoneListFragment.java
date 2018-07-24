@@ -35,7 +35,7 @@ import static android.support.constraint.Constraints.TAG;
  */
 public class TimezoneListFragment extends Fragment {
 
-    private static final String TIMEZONE_URL = "http://timezoneapp/api/locations";
+    private static final String TIMEZONE_URL = "http://10.0.0.221/timezoneapp/public/index.php/api/locations";
     private List<Location> mLocationList;
     private RecyclerView mRecyclerView;
 
