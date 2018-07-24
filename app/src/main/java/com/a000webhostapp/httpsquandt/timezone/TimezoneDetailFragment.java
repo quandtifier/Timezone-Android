@@ -1,6 +1,7 @@
 package com.a000webhostapp.httpsquandt.timezone;
 
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -8,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.a000webhostapp.httpsquandt.timezone.Timezone.TimezoneContent;
 
 
 /**
@@ -29,36 +29,50 @@ public class TimezoneDetailFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_timezone_detail, container, false);
     }
+//
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        if(getArguments() != null) {
+//            TimezoneContent.TimezoneItem timezoneItem = (TimezoneContent.TimezoneItem)
+//                    getArguments().get(TIMEZONE_DETAIL_PARAM);
+//            if(timezoneItem != null) {
+//                updateTimezoneItemView(timezoneItem);
+//            }
+//        } else {
+//            updateTimezoneItemView(TimezoneContent.ITEMS.get(0));
+//        }
+//    }
+//
+//    public static TimezoneDetailFragment getCourseDetailFragment(TimezoneContent.TimezoneItem timezoneItem) {
+//        TimezoneDetailFragment fragment = new TimezoneDetailFragment();
+//        Bundle args = new Bundle();
+//        args.putSerializable(TIMEZONE_DETAIL_PARAM, timezoneItem);
+//        fragment.setArguments(args);
+//        return fragment;
+//    }
+//
+//    public void updateTimezoneItemView(TimezoneContent.TimezoneItem item) {
+//        TextView timezoneIdTextView = (TextView) getActivity().findViewById(R.id.timezone_item_id);
+//        timezoneIdTextView.setText(item.id);
+//        TextView timezoneTitleTextView = (TextView) getActivity().findViewById(R.id.timezone_item_content);
+//        timezoneTitleTextView.setText(item.content);
+//        TextView timezoneShortDescTextView = (TextView) getActivity().findViewById(R.id.timezone_item_details);
+//        timezoneShortDescTextView.setText(item.details);
+//    }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if(getArguments() != null) {
-            TimezoneContent.TimezoneItem timezoneItem = (TimezoneContent.TimezoneItem)
-                    getArguments().get(TIMEZONE_DETAIL_PARAM);
-            if(timezoneItem != null) {
-                updateTimezoneItemView(timezoneItem);
-            }
-        } else {
-            updateTimezoneItemView(TimezoneContent.ITEMS.get(0));
-        }
-    }
-
-    public static TimezoneDetailFragment getCourseDetailFragment(TimezoneContent.TimezoneItem timezoneItem) {
-        TimezoneDetailFragment fragment = new TimezoneDetailFragment();
-        Bundle args = new Bundle();
-        args.putSerializable(TIMEZONE_DETAIL_PARAM, timezoneItem);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    public void updateTimezoneItemView(TimezoneContent.TimezoneItem item) {
-        TextView timezoneIdTextView = (TextView) getActivity().findViewById(R.id.timezone_item_id);
-        timezoneIdTextView.setText(item.id);
-        TextView timezoneTitleTextView = (TextView) getActivity().findViewById(R.id.timezone_item_content);
-        timezoneTitleTextView.setText(item.content);
-        TextView timezoneShortDescTextView = (TextView) getActivity().findViewById(R.id.timezone_item_details);
-        timezoneShortDescTextView.setText(item.details);
+    /**
+     * This interface must be implemented by activities that contain this
+     * fragment to allow an interaction in this fragment to be communicated
+     * to the activity and potentially other fragments contained in that
+     * activity.
+     * <p>
+     * See the Android Training lesson <a href=
+     * "http://developer.android.com/training/basics/fragments/communicating.html"
+     * >Communicating with Other Fragments</a> for more information.
+     */
+    public interface OnFragmentInteractionListener {
+        void onFragmentInteraction(Uri uri);
     }
 
 }

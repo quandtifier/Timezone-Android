@@ -1,17 +1,31 @@
 package com.a000webhostapp.httpsquandt.timezone;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
-import com.a000webhostapp.httpsquandt.timezone.Timezone.TimezoneContent;
-import com.a000webhostapp.httpsquandt.timezone.Timezone.TimezoneContent.TimezoneItem;
+
+import org.json.JSONException;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.List;
+
+import location.Location;
+
+import static android.support.constraint.Constraints.TAG;
 
 /**
  * A fragment representing a list of Items.
@@ -20,6 +34,10 @@ import com.a000webhostapp.httpsquandt.timezone.Timezone.TimezoneContent.Timezone
  * interface.
  */
 public class TimezoneListFragment extends Fragment {
+
+    private static final String TIMEZONE_URL = "http://timezoneapp/api/locations";
+    private List<Location> mLocationList;
+    private RecyclerView mRecyclerView;
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -57,17 +75,18 @@ public class TimezoneListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_timezone_list, container, false);
-
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
+            mRecyclerView = (RecyclerView) view;
             if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+                mRecyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyTimezoneRecyclerViewAdapter(TimezoneContent.ITEMS, mListener));
+            TimezoneAsyncTask timezoneAsyncTask = new TimezoneAsyncTask();
+            timezoneAsyncTask.execute(new String[]{TIMEZONE_URL});
+
         }
         return view;
     }
@@ -102,6 +121,66 @@ public class TimezoneListFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(TimezoneItem item);
+        void onListFragmentInteraction(Location item);
+    }
+
+    private class TimezoneAsyncTask extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... urls) {
+            String response = "";
+            HttpURLConnection urlConnection = null;
+            for (String url : urls) {
+                try {
+                    URL urlObject = new URL(url);
+                    urlConnection = (HttpURLConnection) urlObject.openConnection();
+
+                    InputStream content = urlConnection.getInputStream();
+
+                    BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
+                    String s = "";
+                    while ((s = buffer.readLine()) != null) {
+                        response += s;
+                    }
+
+                } catch (Exception e) {
+                    response = "Unable to download the list of courses, Reason: "
+                            + e.getMessage();
+                }
+                finally {
+                    if (urlConnection != null)
+                        urlConnection.disconnect();
+                }
+            }
+            return response;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            Log.i(TAG, "onPostExecute");
+
+            if (result.startsWith("Unable to")) {
+                Toast.makeText(getActivity().getApplicationContext(), result, Toast.LENGTH_SHORT)
+                        .show();
+                return;
+            }
+
+            try {
+                Log.i("WEBSERVRESULT--------", result);
+                mLocationList = Location.parseLocationJSON(result);
+            }
+            catch (JSONException e) {
+                Toast.makeText(getActivity().getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT)
+                        .show();
+                return;
+            }
+
+            // Everything is good, show the list of courses.
+            if (!mLocationList.isEmpty()) {
+                mRecyclerView.setAdapter(new MyTimezoneRecyclerViewAdapter(mLocationList, mListener));
+            }
+        }
+
+
     }
 }

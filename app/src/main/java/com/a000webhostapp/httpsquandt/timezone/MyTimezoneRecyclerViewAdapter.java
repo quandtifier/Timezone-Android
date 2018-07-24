@@ -7,21 +7,22 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.a000webhostapp.httpsquandt.timezone.TimezoneListFragment.OnListFragmentInteractionListener;
-import com.a000webhostapp.httpsquandt.timezone.Timezone.TimezoneContent.TimezoneItem;
 
 import java.util.List;
 
+import location.Location;
+
 /**
- * {@link RecyclerView.Adapter} that can display a {@link TimezoneItem} and makes a call to the
+ * {@link RecyclerView.Adapter} that can display a {@link Location} and makes a call to the
  * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
 public class MyTimezoneRecyclerViewAdapter extends RecyclerView.Adapter<MyTimezoneRecyclerViewAdapter.ViewHolder> {
 
-    private final List<TimezoneItem> mValues;
+    private final List<Location> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyTimezoneRecyclerViewAdapter(List<TimezoneItem> items, OnListFragmentInteractionListener listener) {
+    public MyTimezoneRecyclerViewAdapter(List<Location> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -36,8 +37,8 @@ public class MyTimezoneRecyclerViewAdapter extends RecyclerView.Adapter<MyTimezo
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mIdView.setText(mValues.get(position).getmLocationID());
+        holder.mContentView.setText(mValues.get(position).getmLocality());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,7 +61,7 @@ public class MyTimezoneRecyclerViewAdapter extends RecyclerView.Adapter<MyTimezo
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public TimezoneItem mItem;
+        public Location mItem;
 
         public ViewHolder(View view) {
             super(view);

@@ -1,6 +1,7 @@
 package com.a000webhostapp.httpsquandt.timezone;
 
 
+import android.net.Uri;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -11,10 +12,11 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.a000webhostapp.httpsquandt.timezone.Timezone.TimezoneContent;
+import location.Location;
 
 public class TimezoneActivity extends AppCompatActivity
-    implements TimezoneListFragment.OnListFragmentInteractionListener {
+    implements TimezoneDetailFragment.OnFragmentInteractionListener,
+    TimezoneListFragment.OnListFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,22 +61,14 @@ public class TimezoneActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+
     @Override
-    public void onListFragmentInteraction(TimezoneContent.TimezoneItem item) {
-        TimezoneDetailFragment timezoneDetailFragment = null;
-        if(findViewById(R.id.timezone_fragment_container) == null) {
-//            timezoneDetailFragment = (TimezoneDetailFragment) getSupportFragmentManager()
-//                    .findFragmentById(R.id.timezone_detail_frag);
-//            timezoneDetailFragment.updateTimezoneItemView(item);
-        } else {
-            timezoneDetailFragment = TimezoneDetailFragment.getCourseDetailFragment(item);
+    public void onFragmentInteraction(Uri uri) {
 
-            FragmentTransaction transaction = getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.timezone_fragment_container, timezoneDetailFragment)
-                    .addToBackStack(null);
+    }
 
-            transaction.commit();
-        }
+    @Override
+    public void onListFragmentInteraction(Location item) {
+
     }
 }
