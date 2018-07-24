@@ -33,15 +33,15 @@ import static android.support.constraint.Constraints.TAG;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class TimezoneListFragment extends Fragment {
+public class LocationListFragment extends Fragment {
 
     private static final String TIMEZONE_URL = "http://10.0.0.221/timezoneapp/public/index.php/api/locations";
     private List<Location> mLocationList;
     private RecyclerView mRecyclerView;
 
-    // TODO: Customize parameter argument names
+
     private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
+
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
 
@@ -49,13 +49,13 @@ public class TimezoneListFragment extends Fragment {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public TimezoneListFragment() {
+    public LocationListFragment() {
     }
 
-    // TODO: Customize parameter initialization
+
     @SuppressWarnings("unused")
-    public static TimezoneListFragment newInstance(int columnCount) {
-        TimezoneListFragment fragment = new TimezoneListFragment();
+    public static LocationListFragment newInstance(int columnCount) {
+        LocationListFragment fragment = new LocationListFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);
@@ -74,7 +74,7 @@ public class TimezoneListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_timezone_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_location_list, container, false);
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
@@ -177,7 +177,7 @@ public class TimezoneListFragment extends Fragment {
 
             // Everything is good, show the list of courses.
             if (!mLocationList.isEmpty()) {
-                mRecyclerView.setAdapter(new MyTimezoneRecyclerViewAdapter(mLocationList, mListener));
+                mRecyclerView.setAdapter(new MyLocationRecyclerViewAdapter(mLocationList, mListener));
             }
         }
 

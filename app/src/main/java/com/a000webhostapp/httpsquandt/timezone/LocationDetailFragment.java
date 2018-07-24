@@ -7,18 +7,16 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TimezoneDetailFragment extends Fragment {
+public class LocationDetailFragment extends Fragment {
 
-    public static final String TIMEZONE_DETAIL_PARAM = "timezone_detail_param";
+    public static final String TIMEZONE_DETAIL_PARAM = "location_detail_param";
 
-    public TimezoneDetailFragment() {
+    public LocationDetailFragment() {
         // Required empty public constructor
     }
 
@@ -27,7 +25,7 @@ public class TimezoneDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_timezone_detail, container, false);
+        return inflater.inflate(R.layout.fragment_location_detail, container, false);
     }
 //
 //    @Override
@@ -44,8 +42,8 @@ public class TimezoneDetailFragment extends Fragment {
 //        }
 //    }
 //
-//    public static TimezoneDetailFragment getCourseDetailFragment(TimezoneContent.TimezoneItem timezoneItem) {
-//        TimezoneDetailFragment fragment = new TimezoneDetailFragment();
+//    public static LocationDetailFragment getCourseDetailFragment(TimezoneContent.TimezoneItem timezoneItem) {
+//        LocationDetailFragment fragment = new LocationDetailFragment();
 //        Bundle args = new Bundle();
 //        args.putSerializable(TIMEZONE_DETAIL_PARAM, timezoneItem);
 //        fragment.setArguments(args);

@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
 
-    tools:context=".TimezoneDetailFragment">
+    tools:context=".LocationDetailFragment">
     <TextView
         android:id="@+id/timezone_item_id"
         android:layout_width="match_parent"

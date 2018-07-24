@@ -2,7 +2,6 @@ package com.a000webhostapp.httpsquandt.timezone;
 
 
 import android.net.Uri;
-import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -14,19 +13,19 @@ import android.view.MenuItem;
 
 import location.Location;
 
-public class TimezoneActivity extends AppCompatActivity
-    implements TimezoneDetailFragment.OnFragmentInteractionListener,
-    TimezoneListFragment.OnListFragmentInteractionListener {
+public class LocationActivity extends AppCompatActivity
+    implements LocationDetailFragment.OnFragmentInteractionListener,
+    LocationListFragment.OnListFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_timezone);
+        setContentView(R.layout.activity_location);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.timezone_fragment_container, new TimezoneListFragment())
+                .add(R.id.timezone_fragment_container, new LocationListFragment())
                 .commit();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);

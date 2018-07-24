@@ -6,8 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".TimezoneActivity"
-    tools:showIn="@layout/activity_timezone">
+    tools:context=".LocationActivity"
+    tools:showIn="@layout/activity_location">
     
 
 </FrameLayout>

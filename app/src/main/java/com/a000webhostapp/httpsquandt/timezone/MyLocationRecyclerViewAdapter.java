@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.a000webhostapp.httpsquandt.timezone.TimezoneListFragment.OnListFragmentInteractionListener;
+import com.a000webhostapp.httpsquandt.timezone.LocationListFragment.OnListFragmentInteractionListener;
 
 import java.util.List;
 
@@ -17,12 +17,12 @@ import location.Location;
  * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
-public class MyTimezoneRecyclerViewAdapter extends RecyclerView.Adapter<MyTimezoneRecyclerViewAdapter.ViewHolder> {
+public class MyLocationRecyclerViewAdapter extends RecyclerView.Adapter<MyLocationRecyclerViewAdapter.ViewHolder> {
 
     private final List<Location> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyTimezoneRecyclerViewAdapter(List<Location> items, OnListFragmentInteractionListener listener) {
+    public MyLocationRecyclerViewAdapter(List<Location> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -30,7 +30,7 @@ public class MyTimezoneRecyclerViewAdapter extends RecyclerView.Adapter<MyTimezo
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_timezone, parent, false);
+                .inflate(R.layout.fragment_location, parent, false);
         return new ViewHolder(view);
     }
 
