@@ -35,7 +35,9 @@ import static android.support.constraint.Constraints.TAG;
  */
 public class LocationListFragment extends Fragment {
 
-    private static final String TIMEZONE_URL = "http://10.0.0.221/timezoneapp/public/index.php/api/locations";
+    private static final String LOCATION_URL = "https://maps.googleapis.com/maps/api/geocode/json?&address=Renton&key=AIzaSyCTMYAa5cUjAODP12X_U9tuFsri588cRpc";
+
+    //private static final String TIMEZONE_URL = "http://10.0.0.221/timezoneapp/public/index.php/api/locations";
     private List<Location> mLocationList;
     private RecyclerView mRecyclerView;
 
@@ -85,7 +87,7 @@ public class LocationListFragment extends Fragment {
                 mRecyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
             TimezoneAsyncTask timezoneAsyncTask = new TimezoneAsyncTask();
-            timezoneAsyncTask.execute(new String[]{TIMEZONE_URL});
+            timezoneAsyncTask.execute(new String[]{LOCATION_URL});
 
         }
         return view;
