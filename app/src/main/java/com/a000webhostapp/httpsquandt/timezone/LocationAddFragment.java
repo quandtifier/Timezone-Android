@@ -1,7 +1,6 @@
 package com.a000webhostapp.httpsquandt.timezone;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,9 +15,13 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -40,7 +43,7 @@ public class LocationAddFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String LOCATION_FIND_URL = "https://maps.googleapis.com/maps/api/geocode/json?";
-    private static final String LOCATION_ADD_URL = "https://maps.googleapis.com/maps/api/geocode/json?";
+    private static final String LOCATION_ADD_URL = "http://10.0.0.221/timezoneapp/public/index.php/api/location/add";
     private static final String GOOGLE_API_KEY = "AIzaSyCTMYAa5cUjAODP12X_U9tuFsri588cRpc";
     private static final String LOCATION_ADD_DEBUG = "LocationAddFragment: ";
 
@@ -89,10 +92,6 @@ public class LocationAddFragment extends Fragment {
                 String url = buildFindLocationURL(v);
                 FindLocationAsyncTask task = new FindLocationAsyncTask();
                 task.execute(new String[]{url.toString()});
-
-                url = buildAddLocationURL(v);
-                AddLocationAsyncTask addTask = new AddLocationAsyncTask();
-                addTask.execute(new String[]{url.toString()});
 
                 mListener.addLocation(mLocation);
             }
@@ -218,6 +217,18 @@ public class LocationAddFragment extends Fragment {
             try {
                 Log.i("WEBSERVRESULT--------", result);
                 mLocation = Location.parseLocationJSON(result);
+
+                JSONObject postData = new JSONObject();
+                try {
+                    postData.put(Location.FORMATTED_ADDRESS,mLocation.getmFormattedAddress());
+                    postData.put(Location.LNG,mLocation.getmLng());
+                    postData.put(Location.LAT,mLocation.getmLat());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Log.i("WEBSERVRESULT--------", postData.toString());
+                AddLocationAsyncTask addTask = new AddLocationAsyncTask();
+                addTask.execute(LOCATION_ADD_URL, postData.toString());
             }
             catch (JSONException e) {
                 Toast.makeText(getActivity().getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT)
@@ -228,30 +239,31 @@ public class LocationAddFragment extends Fragment {
     }
 
 
-    private String buildAddLocationURL(View v) {
+    private String buildAddLocationURL() {
 
-        StringBuilder sb = new StringBuilder(LOCATION_ADD_URL);
+        StringBuilder sb = new StringBuilder();
 
         try {
 
-            String courseId = mLocationCityEditText.getText().toString();
-            sb.append("address=");
-            sb.append(URLEncoder.encode(courseId, "UTF-8"));
+            String city = mLocationCityEditText.getText().toString();
+            sb.append("formatted_address=");
+            sb.append(URLEncoder.encode(city, "UTF-8"));
 
 
-            String courseShortDesc = mLocationSurroundLocality.getText().toString();
-            sb.append(",&");
-            sb.append(URLEncoder.encode(courseShortDesc, "UTF-8"));
+            String lat = mLocation.getmLat();
+            sb.append("&lat=");
+            sb.append(URLEncoder.encode(lat, "UTF-8"));
 
-            sb.append("&key=");
-            sb.append(GOOGLE_API_KEY);
+            String lng = mLocation.getmLng();
+            sb.append("&lng=");
+            sb.append(URLEncoder.encode(lng, "UTF-8"));
 
 
             Log.i(TAG, sb.toString());
 
         }
         catch(Exception e) {
-            Toast.makeText(v.getContext(), "Something wrong with the url" + e.getMessage(), Toast.LENGTH_LONG)
+            Toast.makeText(getActivity(), "Something wrong with the url" + e.getMessage(), Toast.LENGTH_LONG)
                     .show();
         }
         Log.v(LOCATION_ADD_DEBUG, sb.toString());
@@ -267,33 +279,78 @@ public class LocationAddFragment extends Fragment {
         }
 
         @Override
-        protected String doInBackground(String... urls) {
-            String response = "";
-            HttpURLConnection urlConnection = null;
-            for (String url : urls) {
-                try {
-                    URL urlObject = new URL(url);
-                    urlConnection = (HttpURLConnection) urlObject.openConnection();
+        protected String doInBackground(String... params) {
 
-                    InputStream content = urlConnection.getInputStream();
+            String data = "";
 
-                    BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
-                    String s = "";
-                    while ((s = buffer.readLine()) != null) {
-                        response += s;
-                    }
+            HttpURLConnection httpURLConnection = null;
+            try {
 
-                } catch (Exception e) {
-                    response = "Unable to add Location, Reason: "
-                            + e.getMessage();
-                } finally {
-                    if (urlConnection != null)
-                        urlConnection.disconnect();
+                httpURLConnection = (HttpURLConnection) new URL(params[0]).openConnection();
+                httpURLConnection.setRequestMethod("POST");
+
+                httpURLConnection.setDoOutput(true);
+
+                DataOutputStream wr = new DataOutputStream(httpURLConnection.getOutputStream());
+
+                wr.writeBytes("PostData=" + params[1]);
+                wr.flush();
+                wr.close();
+                Log.i("WEBSERVRESULT--------", wr.toString());
+
+                InputStream in = httpURLConnection.getInputStream();
+                InputStreamReader inputStreamReader = new InputStreamReader(in);
+
+                int inputStreamData = inputStreamReader.read();
+                while (inputStreamData != -1) {
+                    char current = (char) inputStreamData;
+                    inputStreamData = inputStreamReader.read();
+                    data += current;
                 }
-
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if (httpURLConnection != null) {
+                    httpURLConnection.disconnect();
+                }
             }
-            return response;
+
+            return data;
         }
+//        @Override
+//        protected String doInBackground(String... urls) {
+//            String response = "";
+//            HttpURLConnection urlConnection = null;
+//            for (String url : urls) {
+//                try {
+//                    URL urlObject = new URL(url);
+//                    urlConnection = (HttpURLConnection) urlObject.openConnection();
+//                    urlConnection.setRequestMethod("POST");
+//                    urlConnection.setDoOutput(true);
+//
+//                    DataOutputStream writer = new DataOutputStream(httpURLConnection.getOutputStream());
+//                    writer.write(buildAddLocationURL());
+//                    writer.flush();
+//
+//                    InputStream content = urlConnection.getInputStream();
+//
+//                    BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
+//                    String s = "";
+//                    while ((s = buffer.readLine()) != null) {
+//                        response += s;
+//                    }
+//
+//                } catch (Exception e) {
+//                    response = "Unable to add Location, Reason: "
+//                            + e.getMessage();
+//                } finally {
+//                    if (urlConnection != null)
+//                        urlConnection.disconnect();
+//                }
+//
+//            }
+//            return response;
+//        }
 
         /**
          * It checks to see if there was a problem with the URL(Network) which is when an

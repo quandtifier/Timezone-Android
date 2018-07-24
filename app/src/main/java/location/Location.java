@@ -7,8 +7,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Location implements Serializable{
 
@@ -25,15 +23,15 @@ public class Location implements Serializable{
     public static final String LAT = "lat";
     public static final String LNG = "lng";
 
-    private String mLocality;
+    private String mFormattedAddress;
     private String mLat;
     private String mLng;
     private int mLocationID = 0;
 
 
-    public Location(String mLocality, String mLat, String mLng) {
+    public Location(String mFormattedAddress, String mLat, String mLng) {
         this.mLocationID = mLocationID++;
-        this.mLocality = mLocality;
+        this.mFormattedAddress = mFormattedAddress;
         this.mLat = mLat;
         this.mLng = mLng;
     }
@@ -118,12 +116,12 @@ public class Location implements Serializable{
         this.mLocationID = mId;
     }
 
-    public String getmLocality() {
-        return mLocality;
+    public String getmFormattedAddress() {
+        return mFormattedAddress;
     }
 
-    public void setmLocality(String mLocality) {
-        this.mLocality = mLocality;
+    public void setmFormattedAddress(String mFormattedAddress) {
+        this.mFormattedAddress = mFormattedAddress;
     }
 
     public String getmLat() {

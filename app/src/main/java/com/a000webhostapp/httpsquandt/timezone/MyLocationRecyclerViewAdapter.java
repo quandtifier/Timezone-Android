@@ -37,7 +37,7 @@ public class MyLocationRecyclerViewAdapter extends RecyclerView.Adapter<MyLocati
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mContentView.setText(mValues.get(position).getmLocality());
+        holder.mContentView.setText(mValues.get(position).getmFormattedAddress());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
